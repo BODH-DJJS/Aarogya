@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aarogya – Register &amp; Join</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #0a1628;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(16,185,129,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 80% 70%, rgba(59,130,246,0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ---- FLOATING BUBBLES ---- */
+    .bubbles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -120px;
+      border-radius: 50%;
+      opacity: 0;
+      animation: rise linear infinite;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.22), transparent 70%);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .bubble:nth-child(1)  { width:40px;  height:40px;  left:8%;   animation-duration:14s; animation-delay:0s;   }
+    .bubble:nth-child(2)  { width:20px;  height:20px;  left:16%;  animation-duration:10s; animation-delay:2s;   }
+    .bubble:nth-child(3)  { width:55px;  height:55px;  left:25%;  animation-duration:17s; animation-delay:5s;   }
+    .bubble:nth-child(4)  { width:30px;  height:30px;  left:35%;  animation-duration:12s; animation-delay:1s;   }
+    .bubble:nth-child(5)  { width:15px;  height:15px;  left:50%;  animation-duration:9s;  animation-delay:3.5s; }
+    .bubble:nth-child(6)  { width:60px;  height:60px;  left:60%;  animation-duration:18s; animation-delay:0.5s; }
+    .bubble:nth-child(7)  { width:25px;  height:25px;  left:70%;  animation-duration:11s; animation-delay:4s;   }
+    .bubble:nth-child(8)  { width:45px;  height:45px;  left:78%;  animation-duration:15s; animation-delay:2.5s; }
+    .bubble:nth-child(9)  { width:18px;  height:18px;  left:88%;  animation-duration:8s;  animation-delay:6s;   }
+    .bubble:nth-child(10) { width:35px;  height:35px;  left:5%;   animation-duration:13s; animation-delay:7s;   }
+    .bubble:nth-child(11) { width:50px;  height:50px;  left:43%;  animation-duration:16s; animation-delay:1.5s; }
+    .bubble:nth-child(12) { width:22px;  height:22px;  left:93%;  animation-duration:11s; animation-delay:8s;   }
+
+    @keyframes rise {
+      0%   { bottom: -120px; opacity: 0;   transform: translateX(0)   scale(0.8); }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.25; }
+      100% { bottom: 110vh;  opacity: 0;   transform: translateX(40px) scale(1.1); }
+    }
+
+    /* ---- CARD ---- */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 24px;
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+      animation: cardIn 0.7s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity:0; transform: translateY(30px) scale(0.97); }
+      to   { opacity:1; transform: translateY(0)    scale(1);    }
+    }
+
+    /* ---- HEADER ---- */
+    .logo-wrap { text-align: center; margin-bottom: 28px; }
+
+    .logo-icon {
+      width: 62px; height: 62px;
+      background: linear-gradient(135deg, #10b981, #0ea5e9);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 12px;
+      box-shadow: 0 0 32px rgba(16,185,129,0.4);
+    }
+    .logo-icon svg { width: 30px; height: 30px; fill: white; }
+
+    .logo-wrap h1 { color: #fff; font-size: 26px; font-weight: 700; letter-spacing: 0.5px; }
+    .logo-wrap p  { color: rgba(255,255,255,0.45); font-size: 13px; font-weight: 300; margin-top: 4px; }
+
+    /* ---- FORM ---- */
+    .form-group { margin-bottom: 18px; }
+
+    label { display:block; color: rgba(255,255,255,0.7); font-size:13px; font-weight:500; margin-bottom:8px; letter-spacing:0.3px; }
+
+    .input-wrap { position: relative; }
+    .input-wrap .icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      width: 18px; height: 18px; opacity: 0.4; pointer-events: none;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 13px 15px 13px 42px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    input::placeholder { color: rgba(255,255,255,0.28); }
+    input:focus {
+      outline: none;
+      border-color: #10b981;
+      background: rgba(16,185,129,0.08);
+      box-shadow: 0 0 0 3px rgba(16,185,129,0.18);
+    }
+
+    .error-msg { color: #f87171; font-size: 12px; margin-top: 6px; display: none; font-weight: 500; }
+
+    /* ---- BUTTON ---- */
+    .btn-submit {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+      color: white; border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 600; font-family: 'Poppins', sans-serif;
+      cursor: pointer; margin-top: 8px; letter-spacing: 0.4px;
+      transition: opacity 0.3s, transform 0.15s, box-shadow 0.3s;
+      box-shadow: 0 6px 20px rgba(16,185,129,0.35);
+      position: relative; overflow: hidden;
+    }
+    .btn-submit::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .btn-submit:hover::after  { opacity: 1; }
+    .btn-submit:hover         { box-shadow: 0 8px 28px rgba(16,185,129,0.5); }
+    .btn-submit:active        { transform: scale(0.98); }
+    .btn-submit:disabled      { background: rgba(255,255,255,0.15); box-shadow: none; cursor: not-allowed; }
+
+    /* ---- SUCCESS ---- */
+    .success-screen { display:none; text-align:center; animation: cardIn 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+
+    .check-circle {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #10b981, #0ea5e9);
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 0 40px rgba(16,185,129,0.45);
+      animation: pop 0.5s cubic-bezier(0.22,1,0.36,1) 0.1s both;
+    }
+    @keyframes pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .check-circle svg { width:36px; height:36px; stroke:white; fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
+
+    .success-screen h2  { color:#fff; font-size:22px; font-weight:700; margin-bottom:10px; }
+    .success-screen p   { color:rgba(255,255,255,0.6); font-size:14px; line-height:1.6; margin-bottom:28px; }
+
+    .btn-meet {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, #1a73e8, #0ea5e9);
+      color: white; text-decoration: none; border-radius: 12px;
+      font-weight: 600; font-size: 15px;
+      box-shadow: 0 6px 20px rgba(26,115,232,0.4);
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+    .btn-meet:hover { box-shadow: 0 10px 30px rgba(26,115,232,0.55); transform: translateY(-2px); }
+    .btn-meet svg   { width:20px; height:20px; fill:white; }
+
+    .footer-note { text-align:center; margin-top:20px; color:rgba(255,255,255,0.22); font-size:11px; }
+
+    @media (max-width: 480px) { .card { padding: 32px 24px; } }
+  </style>
+</head>
+<body>
+
+<div class="bubbles">
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+  <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+</div>
+
+<div class="card">
+
+  <!-- FORM SECTION -->
+  <div id="formSection">
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.81 3.93 12 5C12.19 3.93 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"/>
+        </svg>
+      </div>
+      <h1>Aarogya</h1>
+      <p>Register to join the wellness session</p>
+    </div>
+
+    <form id="registrationForm">
+
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <div class="input-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+          <input type="text" id="name" name="Name" required placeholder="Enter your full name" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">WhatsApp Number</label>
+        <div class="input-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <input type="tel" id="phone" name="Phone" required maxlength="10" placeholder="10-digit mobile number"
+            oninput="this.value = this.value.replace(/[^0-9]/g,'').slice(0,10)" />
+        </div>
+        <div class="error-msg" id="phoneError">⚠ Please enter exactly 10 digits.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <div class="input-wrap">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <input type="text" id="city" name="City" required placeholder="Enter your city" />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Register &amp; Get Meeting Link</button>
+    </form>
+
+    <p class="footer-note">Your information is secure and will not be shared.</p>
+  </div>
+
+  <!-- SUCCESS SECTION -->
+  <div class="success-screen" id="successScreen">
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>You're All Set! 🙏</h2>
+    <p>
+      Thank you for registering with Aarogya.<br/>
+      Click the button below to join the Google Meet session.<br/>
+      We look forward to seeing you!
+    </p>
+    <a class="btn-meet" href="https://meet.google.com/enq-oxhu-tmv" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+      </svg>
+      Join Google Meet
+    </a>
+    <p class="footer-note" style="margin-top:20px;">meet.google.com/enq-oxhu-tmv</p>
+  </div>
+
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxzMFs0OtGCIClE13m6TvsBZwJGu-b987xdZOyZeQB0nKPnNdCrNfrdc5I3iYY2Iir/exec';
+
+  const form       = document.getElementById('registrationForm');
+  const submitBtn  = document.getElementById('submitBtn');
+  const formSec    = document.getElementById('formSection');
+  const successSec = document.getElementById('successScreen');
+  const phoneErr   = document.getElementById('phoneError');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const phone = document.getElementById('phone').value;
+    if (phone.length !== 10) { phoneErr.style.display = 'block'; return; }
+    phoneErr.style.display = 'none';
+
+    submitBtn.disabled  = true;
+    submitBtn.innerText = 'Submitting\u2026';
+
+    try {
+      await fetch(SCRIPT_URL, { method: 'POST', body: new FormData(form), mode: 'no-cors' });
+    } catch (_) {}
+
+    formSec.style.display    = 'none';
+    successSec.style.display = 'block';
+  });
+</script>
+</body>
+</html>
